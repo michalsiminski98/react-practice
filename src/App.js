@@ -1,13 +1,32 @@
+import React, {useEffect, useState} from 'react'
+
 import './App.css';
-import TodoList from './components/TodoList';
+import CurrencyRow from './CurrencyRow';
+
+const BASE_URL = 'https://api.exchangeratesapi.io/latest';
 
 function App() {
-  return (
-    <div className="App">
-      <TodoList>
 
-      </TodoList>
-    </div>
+    const [currencyOptions, setCurrencyOptions] = useState([]);
+
+    useEffect(() => {
+        fetch(BASE_URL)
+        .then(res => res.json())
+        .then(data => {
+            setCurrencyOptions([data.base, data])
+            console.log(data);
+        })
+    }, [])
+
+  return (
+      <>
+        <h1>
+            Convert
+        </h1>
+        <CurrencyRow/>
+        <div className="equals">=</div>
+        <CurrencyRow/>
+    </>
   );
 }
 
